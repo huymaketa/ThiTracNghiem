@@ -40,16 +40,16 @@
       text-align: center;
       margin-bottom: 12px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
     .exam-title { font-size: 1.15rem; font-weight: bold; color: var(--accent); text-transform: uppercase; }
-    .exam-sub { font-size: 0.8rem; color: var(--dim); margin-top: 2px; }
+    .bank-info { font-size: 0.8rem; color: var(--dim); margin-top: 3px; }
 
     .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-size: 0.88rem;
       font-weight: 600;
     }
@@ -61,7 +61,7 @@
       background: #313244;
       border-radius: 3px;
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .progress-bar {
       height: 100%;
@@ -111,10 +111,10 @@
       margin-bottom: 6px;
     }
     .q-text {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      line-height: 1.55;
+      margin-bottom: 18px;
     }
 
     .options-list {
@@ -126,9 +126,9 @@
       background: var(--opt-bg);
       border: 1.5px solid var(--border);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 13px 15px;
       color: var(--text);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       text-align: left;
       cursor: pointer;
       display: flex;
@@ -142,13 +142,14 @@
       font-weight: bold;
       color: var(--accent);
       background: rgba(137, 180, 250, 0.15);
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       flex-shrink: 0;
+      font-size: 0.85rem;
     }
 
     .opt-btn.correct {
@@ -174,7 +175,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.82);
       display: none;
       align-items: center;
       justify-content: center;
@@ -186,7 +187,7 @@
       background: #181825;
       border: 2px solid var(--red);
       border-radius: 16px;
-      padding: 24px 20px;
+      padding: 22px 18px;
       text-align: center;
       width: 100%;
       max-width: 400px;
@@ -197,7 +198,7 @@
       100% { transform: scale(1); opacity: 1; }
     }
     .mock-title { font-size: 1.35rem; font-weight: 900; color: var(--red); margin-bottom: 8px; }
-    .mock-desc { font-size: 0.95rem; color: var(--dim); margin-bottom: 12px; }
+    .mock-desc { font-size: 0.9rem; color: var(--dim); margin-bottom: 12px; }
     .correct-info {
       background: #11111b;
       padding: 12px;
@@ -206,7 +207,7 @@
       color: var(--green);
       font-size: 0.95rem;
       line-height: 1.5;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       text-align: left;
     }
     .btn-next-modal {
@@ -235,7 +236,7 @@
       font-size: 2.5rem;
       font-weight: 900;
       color: var(--accent);
-      margin: 10px 0;
+      margin: 8px 0;
     }
     .btn-restart {
       background: var(--accent);
@@ -263,7 +264,7 @@
 
   <header>
     <div class="exam-title">Đề Thi Tin Lành Ma-thi-ơ</div>
-    <div class="exam-sub">Bản truyền thống 1925 • 30 câu ngẫu nhiên</div>
+    <div class="bank-info" id="bankInfo">Đang nạp ngân hàng câu hỏi...</div>
   </header>
 
   <div class="status-bar">
@@ -278,9 +279,8 @@
   <div class="quiz-card" id="quizCard">
     <div>
       <div class="q-number" id="qCategory">CÂU HỎI 1</div>
-      <div class="q-text" id="qTitle">Đang chuẩn bị đề thi...</div>
+      <div class="q-text" id="qTitle">Đang kết nối dữ liệu GitHub...</div>
     </div>
-
     <div class="options-list" id="optionsBox"></div>
   </div>
 
@@ -305,59 +305,6 @@
   </div>
 
   <script>
-    const masterBank = [
-      { q: "Trước khi được Chúa Giê-xu kêu gọi làm môn đồ, Ma-thi-ơ làm nghề gì?", a: ["Kẻ đánh cá", "Kẻ thâu thuế", "Thầy tế lễ", "Thợ mộc"], c: 1, ref: "Ma-thi-ơ 9:9" },
-      { q: "Sách Tin Lành Ma-thi-ơ được viết chủ yếu hướng tới đối tượng độc giả nào?", a: ["Người La-mã", "Người Hy-lạp", "Người Do Thái", "Các tín đồ tại Ê-phê-sô"], c: 2, ref: "Tổng quan Tin Lành Ma-thi-ơ" },
-      { q: "Gia phổ Chúa Giê-xu trong Ma-thi-ơ đoạn 1 được chia thành mấy thời kỳ?", a: ["2 thời kỳ (mỗi kỳ 20 đời)", "3 thời kỳ (mỗi kỳ 14 đời)", "4 thời kỳ (mỗi kỳ 10 đời)", "3 thời kỳ (mỗi kỳ 12 đời)"], c: 1, ref: "Ma-thi-ơ 1:17" },
-      { q: "Tên 'Em-ma-nu-ên' được tiên tri về Chúa Giê-xu có nghĩa là gì?", a: ["Đức Chúa Trời là Đấng Cứu Rỗi", "Đức Chúa Trời ở cùng chúng ta", "Đấng được xức dầu", "Vua muôn vua"], c: 1, ref: "Ma-thi-ơ 1:23" },
-      { q: "Các thầy bác sĩ ở Đông phương đã dâng lên con trẻ Giê-xu những lễ vật nào?", a: ["Vàng, bạc, ngọc châu", "Vàng, nhũ hương, một dược", "Dầu thơm, vàng, lụa là", "Bánh, rượu, một dược"], c: 1, ref: "Ma-thi-ơ 2:11" },
-      { q: "Khi vua Hê-rốt tìm giết con trẻ, thiên sứ bảo Giô-sép đưa gia đình lánh nạn sang xứ nào?", a: ["Xứ Ga-li-lê", "Xứ Sa-ma-ri", "Xứ Ê-díp-tô", "Xứ Si-ri"], c: 2, ref: "Ma-thi-ơ 2:13-14" },
-      { q: "Lời tiên tri về tiếng than khóc tại Ra-ma khi Hê-rốt giết các con trẻ là của đấng tiên tri nào?", a: ["Ê-sai", "Giê-rê-mi", "Đa-ni-ên", "Mi-chê"], c: 1, ref: "Ma-thi-ơ 2:17-18" },
-      { q: "Chúa Giê-xu chịu phép báp-tem bởi Giăng Báp-tít tại nơi nào?", a: ["Biển Ga-li-lê", "Ao Si-lô-ê", "Sông Giô-đanh", "Ao Bê-tết-đa"], c: 2, ref: "Ma-thi-ơ 3:13" },
-      { q: "Thức ăn của Giăng Báp-tít khi ở trong đồng vắng là gì?", a: ["Bánh không men và nước lã", "Châu chấu và mật ong rừng", "Trái vả và dầu ô-liu", "Cá khô và bánh lúa mạch"], c: 1, ref: "Ma-thi-ơ 3:4" },
-      { q: "Chúa Giê-xu đã kiêng ăn bao nhiêu ngày đêm trước khi chịu ma quỷ cám dỗ?", a: ["30 ngày đêm", "40 ngày đêm", "50 ngày đêm", "7 ngày đêm"], c: 1, ref: "Ma-thi-ơ 4:2" },
-      { q: "Bài giảng trên núi của Chúa Giê-xu được chép trọn vẹn trong các đoạn nào?", a: ["Đoạn 1 đến đoạn 3", "Đoạn 5 đến đoạn 7", "Đoạn 10 đến đoạn 12", "Đoạn 24 đến đoạn 25"], c: 1, ref: "Ma-thi-ơ đoạn 5-7" },
-      { q: "Trong Bài giảng trên núi, Chúa phán các môn đồ là gì đối với thế gian?", a: ["Muối của đất và sự sáng của thế gian", "Ngọn đuốc và men của thế gian", "Chiên giữa bầy muông sói", "Cây nho và nhánh nho"], c: 0, ref: "Ma-thi-ơ 5:13-14" },
-      { q: "Bài Cầu Nguyện Chung ('Lạy Cha chúng tôi ở trên trời...') được chép trong đoạn nào?", a: ["Ma-thi-ơ đoạn 4", "Ma-thi-ơ đoạn 6", "Ma-thi-ơ đoạn 8", "Ma-thi-ơ đoạn 11"], c: 1, ref: "Ma-thi-ơ 6:9-13" },
-      { q: "Người có đứa đầy tớ bị tê bại và thể hiện đức tin lớn khiến Chúa khen ngợi là ai?", a: ["Thầy tế lễ thượng phẩm", "Thầy đội tại Ca-bê-na-um", "Người đàn bà xứ Ca-na-an", "Ni-cô-đem"], c: 1, ref: "Ma-thi-ơ 8:5-10" },
-      { q: "Khi Chúa Giê-xu cùng môn đồ vượt biển và gặp bão lớn, Ngài đang làm gì?", a: ["Cầu nguyện trên mũi thuyền", "Đang ngủ", "Chèo thuyền cùng môn đồ", "Đang giảng đạo"], c: 1, ref: "Ma-thi-ơ 8:24" },
-      { q: "Chúa Giê-xu đuổi quỷ nhập vào bầy súc vật nào tại xứ người Ga-đa-ra?", a: ["Bầy dê", "Bầy bò", "Bầy heo", "Bầy lừa"], c: 2, ref: "Ma-thi-ơ 8:30-32" },
-      { q: "Người đàn bà bị bệnh mất huyết 12 năm được chữa lành khi làm điều gì?", a: ["Được Chúa đặt tay trên đầu", "Rờ trăn áo của Chúa Giê-xu", "Tắm tại ao Si-lô-ê", "Uống nước Chúa ban"], c: 1, ref: "Ma-thi-ơ 9:20-22" },
-      { q: "Trong phép lạ hóa bánh cho 5.000 người ăn, ban đầu các môn đồ chỉ có bao nhiêu thực phẩm?", a: ["7 cái bánh và vài con cá", "5 cái bánh và 2 con cá", "12 cái bánh và 5 con cá", "3 ổ bánh lúa mạch"], c: 1, ref: "Ma-thi-ơ 14:17" },
-      { q: "Số lượng giỏ bánh vụn thu lại sau khi 5.000 người ăn no nê là bao nhiêu?", a: ["7 giỏ", "10 giỏ", "12 giỏ đầy", "3 giỏ"], c: 2, ref: "Ma-thi-ơ 14:20" },
-      { q: "Môn đồ nào đã bước xuống thuyền và đi trên mặt nước đến cùng Chúa Giê-xu?", a: ["Gia-cơ", "Giăng", "Phi-e-rơ", "Anh-rê"], c: 2, ref: "Ma-thi-ơ 14:28-29" },
-      { q: "Tại vùng Sê-sa-rê Phi-líp, Phi-e-rơ đã tuyên xưng Chúa Giê-xu là ai?", a: ["Đấng tiên tri lớn nhất", "Thầy là Đấng Christ, Con Đức Chúa Trời hằng sống", "Thầy là Giăng Báp-tít sống lại", "Vua của dân Y-sơ-ra-ên"], c: 1, ref: "Ma-thi-ơ 16:16" },
-      { q: "Trên núi Hóa Hình, hai nhân vật Cựu Ước nào đã hiện ra trò chuyện với Chúa Giê-xu?", a: ["Áp-ra-ham và Đa-vít", "Môi-se và Ê-li", "Nô-ê và Đa-ni-ên", "Hê-nóc và Ê-li"], c: 1, ref: "Ma-thi-ơ 17:3" },
-      { q: "Khi Phi-e-rơ hỏi có phải tha thứ cho anh em đến 7 lần chăng, Chúa Giê-xu đáp thế nào?", a: ["Đến 70 lần", "Không phải đến 7 lần, mà là 70 lần 7", "Chỉ cần 3 lần là đủ", "Đến 100 lần"], c: 1, ref: "Ma-thi-ơ 18:21-22" },
-      { q: "Chúa Giê-xu đã cỡi con vật nào khi vào thành Giê-ru-sa-lem cách vinh hiển?", a: ["Một con ngựa bạch", "Một con lừa con", "Một con lạc đà", "Đi bộ cùng đoàn dân"], c: 1, ref: "Ma-thi-ơ 21:2-7" },
-      { q: "Chúa Giê-xu đã rủa cây nào vì chỉ có lá mà không có trái?", a: ["Cây nho", "Cây vả", "Cây ô-liu", "Cây chà là"], c: 1, ref: "Ma-thi-ơ 21:19" },
-      { q: "Điều răn thứ nhất và lớn hơn hết theo lời dạy của Chúa Giê-xu là gì?", a: ["Ngươi hãy yêu kẻ lân cận như mình", "Ngươi hãy hết lòng, hết linh hồn, hết ý mà kính mến Chúa là Đức Chúa Trời ngươi", "Ngươi chớ giết người", "Hãy giữ ngày Sa-bát"], c: 1, ref: "Ma-thi-ơ 22:37-38" },
-      { q: "Trong thí dụ về 10 người nữ đồng trinh, có bao nhiêu người khôn và người dại?", a: ["7 khôn, 3 dại", "5 khôn, 5 dại", "6 khôn, 4 dại", "8 khôn, 2 dại"], c: 1, ref: "Ma-thi-ơ 25:1-2" },
-      { q: "Trong thí dụ về các ta-lâng, đầy tớ nhận 1 ta-lâng đã làm gì với số tiền đó?", a: ["Đem cho vay lấy lãi", "Đem chôn giấu dưới đất", "Mua sắm lụa là buôn bán", "Làm mất hết tiền"], c: 1, ref: "Ma-thi-ơ 25:18" },
-      { q: "Giu-đa Ích-ca-ri-ốt đã nộp Chúa Giê-xu cho các thầy tế lễ cả với giá bao nhiêu?", a: ["20 đồng bạc", "30 đồng bạc", "50 đồng bạc", "100 đồng tiền vàng"], c: 1, ref: "Ma-thi-ơ 26:15" },
-      { q: "Nơi Chúa Giê-xu cùng các môn đồ đến cầu nguyện trong đêm Ngài bị bắt là vườn gì?", a: ["Vườn Ê-đen", "Vườn Ghết-sê-ma-nê", "Vườn Ô-liu", "Vườn Bê-tha-ni"], c: 1, ref: "Ma-thi-ơ 26:36" },
-      { q: "Phi-e-rơ đã chối Chúa Giê-xu mấy lần trước khi gà gáy?", a: ["1 lần", "2 lần", "3 lần", "4 lần"], c: 2, ref: "Ma-thi-ơ 26:75" },
-      { q: "Tên người tử tù hung phạm được tha thay cho Chúa Giê-xu là ai?", a: ["Ba-ra-ba", "Si-môn", "Man-chu", "Ca-i-phe"], c: 0, ref: "Ma-thi-ơ 27:16-26" },
-      { q: "Ai là người bị ép vác cây thập tự thay cho Chúa Giê-xu trên đường lên đồi?", a: ["Giô-sép người A-ri-ma-thê", "Si-môn người Sy-ren", "Ni-cô-đem", "Gia-cơ"], c: 1, ref: "Ma-thi-ơ 27:32" },
-      { q: "Nơi Chúa Giê-xu bị đóng đinh có tên gọi là Gô-gô-tha, nghĩa là gì?", a: ["Nơi sầu não", "Chỗ Cái Sọ", "Đồi Bình An", "Nơi Phán Xét"], c: 1, ref: "Ma-thi-ơ 27:33" },
-      { q: "Câu kêu 'Ê-li, Ê-li, lam-ma sa-bách-ta-ni' của Chúa trên thập tự giá có nghĩa là gì?", a: ["Mọi việc đã được trọn", "Đức Chúa Trời tôi ôi, Đức Chúa Trời tôi ôi, sao Ngài lìa bỏ tôi?", "Lạy Cha, con giao linh hồn lại trong tay Cha", "Xin Cha tha tội cho họ"], c: 1, ref: "Ma-thi-ơ 27:46" },
-      { q: "Khi Chúa Giê-xu trút hơi thở cuối cùng, hiện tượng kỳ lạ nào xảy ra trong đền thờ?", a: ["Hòm giao ước biến mất", "Màn trong đền thờ xé đôi từ trên chí dưới", "Các bàn thờ sụp đổ", "Đèn vàng vụt tắt"], c: 1, ref: "Ma-thi-ơ 27:51" },
-      { q: "Người môn đồ giàu có đã đến xin thi thể Chúa Giê-xu để chôn trong mộ đá mới là ai?", a: ["Ni-cô-đem", "Giô-sép người A-ri-ma-thê", "Xa-chê", "Thầy đội La-mã"], c: 1, ref: "Ma-thi-ơ 27:57-60" },
-      { q: "Các thầy tế lễ cả đã đưa bạc cho lính canh mộ để phao tin dối trá nào?", a: ["Chúa không chết thật", "Môn đồ đến ăn trộm xác ban đêm khi lính đang ngủ", "Thiên sứ đã mang xác đi", "Lính đã tự ý dời mộ"], c: 1, ref: "Ma-thi-ơ 28:12-13" },
-      { q: "Đại Mạng Lệnh ('Hãy đi dạy dỗ muôn dân...') được chép ở phân đoạn nào?", a: ["Ma-thi-ơ 26:1-5", "Ma-thi-ơ 28:18-20", "Ma-thi-ơ 25:31-40", "Ma-thi-ơ 18:15-20"], c: 1, ref: "Ma-thi-ơ 28:18-20" },
-      { q: "Trong Ma-thi-ơ 1, có bao nhiêu người nữ được trực tiếp nhắc tên trong gia phổ Chúa?", a: ["3 người", "4 người", "5 người (Tha-ma, Ra-háp, Ru-tơ, vợ U-ri, Ma-ri)", "Không có người nữ nào"], c: 2, ref: "Ma-thi-ơ 1:3-16" },
-      { q: "Tên gọi khác của sứ đồ Ma-thi-ơ trong các sách Tin Lành khác là gì?", a: ["Lê-vi", "Thê-đa", "Ba-ra-ba", "Ba-thê-lê-mi"], c: 0, ref: "Mác 2:14 / Lu-ca 5:27" },
-      { q: "Trong phép lạ hóa bánh lần thứ hai cho 4.000 người ăn, số giỏ bánh vụn gom lại là bao nhiêu?", a: ["12 giỏ", "7 giỏ", "5 giỏ", "10 giỏ"], c: 1, ref: "Ma-thi-ơ 15:37" },
-      { q: "Quan tổng đốc La-mã xử án Chúa Giê-xu và rửa tay trước đoàn dân là ai?", a: ["Hê-rốt Ạc-ríp-ba", "Bôn-xơ Phi-lát", "Phê-lít", "Phiê-tu"], c: 1, ref: "Ma-thi-ơ 27:24" },
-      { q: "Thành phố được gọi là 'thành của Ngài' nơi Chúa thi hành nhiều phép lạ tại Ga-li-lê là thành nào?", a: ["Bết-lê-hem", "Ca-bê-na-um", "Na-xa-rét", "Giê-ri-cô"], c: 1, ref: "Ma-thi-ơ 9:1" },
-      { q: "Tiếng phán từ trời khi Chúa Giê-xu vừa chịu phép báp-tem xong phán điều gì?", a: ["Nầy là Vua dân Do Thái", "Nầy là Con yêu dấu của ta, đẹp lòng ta mọi đường", "Hãy nghe lời Ngài", "Đấng Mê-si đã đến"], c: 1, ref: "Ma-thi-ơ 3:17" },
-      { q: "Ai là mẹ của hai sứ đồ Gia-cơ và Giăng đã đến xin cho hai con ngồi hai bên Chúa?", a: ["Ma-ri", "Bà mẹ của các con Xê-bê-đê", "Ê-li-sa-bét", "Sa-lô-mê"], c: 1, ref: "Ma-thi-ơ 20:20-21" },
-      { q: "Trong thí dụ về người gieo giống, loại đất nào giúp hạt giống kết quả một hạt ra một trăm, sáu chục, ba chục?", a: ["Đất dọc đường", "Đất đá sỏi", "Đất bụi gai", "Đất tốt"], c: 3, ref: "Ma-thi-ơ 13:8" },
-      { q: "Khi người Pha-ri-si hỏi về việc nộp thuế cho Sê-sa, Chúa bảo họ đưa xem đồng tiền gì?", a: ["Đồng bạc si-ếc-lơ", "Đồng tiền thuế (đơ-ni-ê)", "Đồng hai xu của người góa bụa", "Nén vàng"], c: 1, ref: "Ma-thi-ơ 22:19" },
-      { q: "Chúa Giê-xu phán: 'Kẻ nào bền chí cho đến cuối cùng, thì sẽ được...'", a: ["Làm quan lớn", "Rỗi linh hồn", "Nhiều của cải", "Sống thọ"], c: 1, ref: "Ma-thi-ơ 24:13" },
-      { q: "Bảng chữ lính đóng đinh phía trên đầu Chúa Giê-xu ghi nội dung gì?", a: ["Kẻ tự xưng là Đấng Christ", "NGƯỜI NÀY LÀ JÊSUS, VUA DÂN GIU-ĐA", "Kẻ phạm thượng", "Na-xa-rét"], c: 1, ref: "Ma-thi-ơ 27:37" }
-    ];
-
     const mockList = [
       "Sai rồi ní ơi! 🤦‍♂️",
       "Hổng đúng rồi bạn! 😜",
@@ -369,11 +316,99 @@
       "Câu này dễ mà đánh sai hả ní! 🤣"
     ];
 
+    let activeBank = [];
     let currentQuestions = [];
     let currentIdx = 0;
     let score = 0;
     let wrongAnswers = [];
     let isLocked = false;
+
+    // Bộ phân tích file text chứa 300 câu hỏi
+    function parseTxtBank(rawText) {
+      const parsed = [];
+      const blocks = rawText.split(/Câu\s+\d+:/i);
+
+      for (let i = 1; i < blocks.length; i++) {
+        const block = blocks[i].trim();
+        if (!block) continue;
+
+        const lines = block.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        if (lines.length < 3) continue;
+
+        const qText = lines[0].replace(/^\(\*\*\)\s*/, '').trim();
+        const options = {};
+        let correctRaw = '';
+        let ref = 'Sách Ma-thi-ơ';
+
+        for (let j = 1; j < lines.length; j++) {
+          const line = lines[j];
+          const mOpt = line.match(/^([a-f])\.\s*(.*)/i);
+          const mAns = line.match(/^Đáp án:\s*([^|]+)(?:\|\s*TDKT:\s*(.*))?/i);
+
+          if (mOpt) {
+            options[mOpt[1].toLowerCase()] = mOpt[2].trim();
+          } else if (mAns) {
+            correctRaw = mAns[1].trim().toLowerCase();
+            if (mAns[2]) ref = mAns[2].trim();
+          }
+        }
+
+        const answers = correctRaw.split(/[,;\s]+/).filter(Boolean);
+        let choices = [];
+        let correctIdx = 0;
+
+        if (answers.length > 1 || Object.keys(options).length > 4) {
+          const correctCombined = answers.map(k => options[k]).filter(Boolean).join(', ');
+          choices = [
+            correctCombined,
+            "Chỉ có: " + (options[answers[0]] || "ý đầu") + " là đúng",
+            "Cả các ý trên đều không được Kinh Thánh chép",
+            "Không có đáp án nào chính xác"
+          ];
+          correctIdx = 0;
+        } else {
+          const keys = ['a', 'b', 'c', 'd'];
+          choices = keys.map(k => options[k] || 'Không có');
+          const single = answers[0] || 'a';
+          correctIdx = keys.indexOf(single);
+          if (correctIdx === -1) correctIdx = 0;
+        }
+
+        while (choices.length < 4) choices.push('Ý khác');
+
+        parsed.push({
+          q: qText,
+          a: choices.slice(0, 4),
+          c: correctIdx,
+          ref: ref
+        });
+      }
+      return parsed;
+    }
+
+    // Tự động tải ngầm questions.txt từ cùng thư mục trên GitHub
+    async function fetchQuestionsFromGitHub() {
+      const qTitleEl = document.getElementById('qTitle');
+      try {
+        // Thêm timestamp để ép trình duyệt luôn tải file mới nhất, tránh cache
+        const res = await fetch('questions.txt?t=' + Date.now());
+        if (!res.ok) {
+          throw new Error('Chưa tìm thấy file questions.txt trên GitHub (Mã lỗi: ' + res.status + ')');
+        }
+        const text = await res.text();
+        const parsed = parseTxtBank(text);
+
+        if (parsed.length === 0) {
+          throw new Error('File questions.txt trống hoặc không đúng định dạng câu hỏi');
+        }
+
+        activeBank = parsed;
+        document.getElementById('bankInfo').textContent = 'Ngân hàng: ' + activeBank.length + ' câu (Random 30 câu mỗi đề)';
+        startNewExam();
+      } catch (err) {
+        qTitleEl.textContent = 'Lỗi nạp đề: ' + err.message + '. Hãy đảm bảo file questions.txt đã được tải lên cùng thư mục với index.html.';
+      }
+    }
 
     function safeShuffle(arr) {
       let copy = arr.slice();
@@ -388,8 +423,9 @@
 
     function startNewExam() {
       try {
-        const picked = safeShuffle(masterBank).slice(0, 30);
-        
+        const examSize = Math.min(30, activeBank.length);
+        const picked = safeShuffle(activeBank).slice(0, examSize);
+
         currentQuestions = picked.map(function(item) {
           let choicesWithFlag = item.a.map(function(text, idx) {
             return { text: text, isCorrect: (idx === item.c) };
@@ -420,7 +456,7 @@
         updateUI();
         loadQuestion();
       } catch (err) {
-        document.getElementById('qTitle').textContent = "Lỗi nạp đề: " + err.message;
+        document.getElementById('qTitle').textContent = "Lỗi khởi tạo đề: " + err.message;
       }
     }
 
@@ -547,9 +583,9 @@
       }
     }
 
-    // Đảm bảo DOM load hoàn tất 100% mới khởi động game
+    // Tự động kích hoạt nạp ngầm từ GitHub khi tải trang
     window.addEventListener('DOMContentLoaded', function() {
-      startNewExam();
+      fetchQuestionsFromGitHub();
     });
   </script>
 </body>
